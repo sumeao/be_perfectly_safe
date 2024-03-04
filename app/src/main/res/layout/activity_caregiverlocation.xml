@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#C1A142"
+    tools:context=".caregiverlocation">
+
+    <ImageView
+        android:id="@+id/imageView22"
+        android:layout_width="0dp"
+        android:layout_height="120dp"
+        android:layout_margin="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/big_logo"
+        tools:ignore="ImageContrastCheck" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
+        app:layout_constraintTop_toBottomOf="@id/imageView22"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+            <fragment
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/google_maps2"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <Button
+                android:id="@+id/btnStartDrawing"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="開始繪製"
+                android:textSize="15dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                android:onClick="startDrawing"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <Button
+                android:id="@+id/btnFinishDrawing"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="完成繪製"
+                android:textSize="15dp"
+                android:layout_below="@id/btnStartDrawing"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                android:onClick="finishDrawing"
+                app:layout_constraintTop_toBottomOf="@id/btnStartDrawing"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <Button
+                android:id="@+id/btnClearDrawing"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="清除繪製"
+                android:textSize="15dp"
+                android:layout_below="@id/btnFinishDrawing"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                android:onClick="clearDrawing"
+                app:layout_constraintTop_toBottomOf="@id/btnFinishDrawing"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <Button
+                android:id="@+id/btnDeleteDrawing"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="刪除繪製"
+                android:textSize="15dp"
+                android:layout_below="@id/btnClearDrawing"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                android:onClick="deleteDrawing"
+                app:layout_constraintTop_toBottomOf="@id/btnClearDrawing"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <!--    <fragment-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        android:id="@+id/google_maps2"-->
+    <!--        android:name="com.google.android.gms.maps.SupportMapFragment"/>-->
+
+    <!--    <Button-->
+    <!--        android:id="@+id/btnStartDrawing"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:text="開始繪製"-->
+    <!--        android:layout_alignParentTop="true"-->
+    <!--        android:layout_alignParentStart="true"-->
+    <!--        android:layout_marginTop="16dp"-->
+    <!--        android:onClick="startDrawing" />-->
+
+    <!--    <Button-->
+    <!--        android:id="@+id/btnFinishDrawing"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:text="完成繪製"-->
+    <!--        android:layout_below="@id/btnStartDrawing"-->
+    <!--        android:layout_alignParentStart="true"-->
+    <!--        android:layout_marginTop="16dp"-->
+    <!--        android:onClick="finishDrawing" />-->
+
+    <!--    <Button-->
+    <!--        android:id="@+id/btnClearDrawing"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:text="清除繪製"-->
+    <!--        android:layout_below="@id/btnFinishDrawing"-->
+    <!--        android:layout_alignParentStart="true"-->
+    <!--        android:layout_marginTop="16dp"-->
+    <!--        android:onClick="clearDrawing" />-->
+
+    <!--    <Button-->
+    <!--        android:id="@+id/btnDeleteDrawing"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:text="刪除繪製"-->
+    <!--        android:layout_below="@id/btnClearDrawing"-->
+    <!--        android:layout_alignParentStart="true"-->
+    <!--        android:layout_marginTop="16dp"-->
+    <!--        android:onClick="deleteDrawing" />-->
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

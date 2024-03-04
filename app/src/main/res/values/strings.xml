@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">be_perfectly_safe</string>
+    <item name="tv_playerOne" type="id" />
+    <item name="tv_playerOneScore" type="id" />
+    <item name="tv_playerTwo" type="id" />
+    <item name="tv_playerTwoScore" type="id" />
+    <item name="tv_playerStatus" type="id" />
+    <item name="btn_0" type="id" />
+    <item name="btn_1" type="id" />
+    <item name="btn_2" type="id" />
+    <item name="btn_3" type="id" />
+    <item name="btn_4" type="id" />
+    <item name="btn_5" type="id" />
+    <item name="btn_6" type="id" />
+    <item name="btn_7" type="id" />
+    <item name="btn_8" type="id" />
+    <item name="btn_resetGame" type="id" />
+    <item name="btn_back" type="id" />
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="login">Login</string>
+    <string name="enter_email">Enter email</string>
+    <string name="enter_password">Enter password</string>
+    <string name="submit">Submit</string>
+    <string name="error_while_logging_in">Error while logging in</string>
+    <string name="enter_name">Enter name</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="logout">Logout</string>
+    <string name="fetch_user">Fetch user</string>
+    <string name="click_here_to_register">Click here to  <u>register</u> </string>
+    <string name="click_here_to_login">Click here to <u>login</u></string>
+    <string name="title_activity_map">map</string>
+</resources>

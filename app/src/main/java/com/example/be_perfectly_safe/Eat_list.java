@@ -53,6 +53,8 @@ public class Eat_list extends AppCompatActivity {
     protected void onCreate(Bundle saveInstanceState) {
         super.onCreate(saveInstanceState);
         setContentView(R.layout.activity_eat_list);
+
+        //綁定元件
         listView = findViewById(R.id.Eat);
 
         sqlGetData();
@@ -66,17 +68,17 @@ public class Eat_list extends AppCompatActivity {
         SqlDataBaseHelper dbHelper = new SqlDataBaseHelper(getApplicationContext());
         db = dbHelper.getReadableDatabase(); // 開啟資料庫
 
-        // 构建查询语句
+        // 建構查詢語句
         String[] projection = {
                 "name"
         };
 
-        String selection = ""; // 可以使用适当的条件
-        String[] selectionArgs = new String[0]; // 如果有条件，提供相应的参数
-        String sortOrder = ""; // 可以指定排序顺序
+        String selection = ""; 
+        String[] selectionArgs = new String[0]; 
+        String sortOrder = ""; 
         String[] selectMod = {"food"};
 
-        // 执行查询
+        // 執行查询
         Cursor c = db.query(
                 selectMod[0],
                 projection,
@@ -87,24 +89,28 @@ public class Eat_list extends AppCompatActivity {
                 sortOrder
         );
 
+        //取得資料庫查詢資料
         food_name = new String[c.getCount()];
 
         int i = 0;
+
+        //當下一筆有資料時，i+1
         while (c.moveToNext()) {
             food_name[i] = c.getString(0);
             i++;
         }
-        // 关闭游标和数据库连接
+        // 關閉資料庫
         c.close();
 
     }
 
+    //物定listview的適配器
     public void ListView_Customer(Context context) {
         listView.setAdapter(null);
-        SimpleAdapter adapter = new SimpleAdapter(context, getData(), R.layout.recipe_list, new String[]{"name"}, new int[]{R.id.ExName}) {
+        SimpleAdapter adapter = new SimpleAdapter(context, getData(), R.layout.recipe_list, new String[]{"name"}, new int[]{R.id.ExName}) {//將ExName的layout放到recipe_list裡，把getdata取得的資料放到"name"裡
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
-                View view = super.getView(position, convertView, parent);
+                View view = super.getView(position, convertView, parent);//將上面的程式複寫到getview的方法裡
                 return view;
             }
         };
@@ -112,7 +118,7 @@ public class Eat_list extends AppCompatActivity {
         listView.setAdapter(adapter);
     }
 
-    public List getData() {
+    public List getData() {//將資料一筆一筆放到list對應的欄位裡
         List list = new ArrayList();
         Map map;
         for (int i = 0; i < food_name.length; i++) {
@@ -149,16 +155,18 @@ public class Eat_list extends AppCompatActivity {
             public View getView(int i, View view, ViewGroup container) {
                 View ReLayout = View.inflate(Eat_list.this, R.layout.recipe_list, null);
 
+                //綁定元件
                 name_list = ReLayout.findViewById(R.id.ExName);
                 photo_list = ReLayout.findViewById(R.id.photo);
                 ImageButton video = ReLayout.findViewById(R.id.BtVideo);
 
+                //若資料不為null，設定資料到對應欄位裡
                 if (food_name[i] != null) {
                     name_list.setText(food_name[i]);
                     photo_list.setImageResource(food_photo[i]);
                 }
 
-                video.setOnClickListener(new View.OnClickListener() {
+                video.setOnClickListener(new View.OnClickListener() {//設定監聽事件
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(Eat_list.this, eat_ingredients.class);

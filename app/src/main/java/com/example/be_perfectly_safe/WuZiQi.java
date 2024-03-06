@@ -16,8 +16,11 @@ public class WuZiQi extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wu_zi_qi);
+
+        //綁定元件
         letgo = findViewById(R.id.letgo);
 
+        //設定監聽事件(跳轉至wuziqifinal)
         letgo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

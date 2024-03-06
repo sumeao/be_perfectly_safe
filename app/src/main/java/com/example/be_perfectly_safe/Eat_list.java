@@ -107,7 +107,7 @@ public class Eat_list extends AppCompatActivity {
     //物定listview的適配器
     public void ListView_Customer(Context context) {
         listView.setAdapter(null);
-        SimpleAdapter adapter = new SimpleAdapter(context, getData(), R.layout.recipe_list, new String[]{"name"}, new int[]{R.id.ExName}) {//將ExName的layout放到recipe_list裡，把getdata取得的資料放到"name"裡
+        SimpleAdapter adapter = new SimpleAdapter(context, getData(), R.layout.recipe_list, new String[]{"name"}, new int[]{R.id.ExName}) {//把getdata取得的"name"放到recipe_list的ExName裡
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
                 View view = super.getView(position, convertView, parent);//將上面的程式複寫到getview的方法裡

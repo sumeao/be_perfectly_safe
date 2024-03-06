@@ -18,9 +18,11 @@ public class TicTacToe extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tic_tac_toe);
 
+        //綁定元件
         btn_2player = findViewById(R.id.btn_2player);
         btn_robot = findViewById(R.id.btn_robot);
 
+        //設定監聽事件(跳轉至TicTwoPlayer)
         btn_2player.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -29,6 +31,7 @@ public class TicTacToe extends AppCompatActivity {
             }
         });
 
+        //設定監聽事件(跳轉至TicOnePlayer)
         btn_robot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

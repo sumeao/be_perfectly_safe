@@ -22,8 +22,10 @@ public class WuziqiIntroAssign extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wuziqi_intro_assign);
 
+        //綁定元件
         BtnWuziqi = findViewById(R.id.BtnWuziqiAssign);
 
+        //設定監聽事件(跳轉至WuZiQi)
         BtnWuziqi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

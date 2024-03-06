@@ -17,7 +17,11 @@ public class TicTacToeIntroAssign extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tic_tac_toe_intro_assign);
+
+        //綁定元件
         BtnTic = findViewById(R.id.BtnTTTAssign);
+
+        //設定監聽事件(跳轉至TicTacToe)
         BtnTic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -14,12 +14,12 @@ import java.io.ByteArrayOutputStream;
 public class SqlDataBaseHelper extends SQLiteOpenHelper {
 
 
-    private static final String DataBaseName = "users.db";
-    private static final int DataBaseVersion = 1;
-    private static final String DataBaseTable1 = "caregiver";
-    private static final String DataBaseTable2 = "patient";
-    private static final String DataBaseTable3 = "family";
-    private static final String DataBaseTable4 = "food";
+    private static final String DataBaseName = "users.db";//資料庫名稱
+    private static final int DataBaseVersion = 1;//資料庫版本
+    private static final String DataBaseTable1 = "caregiver";//資料表名稱
+    private static final String DataBaseTable2 = "patient";//資料表名稱
+    private static final String DataBaseTable3 = "family";//資料表名稱
+    private static final String DataBaseTable4 = "food";//資料表名稱
     private byte[] convertDrawableToByteArray;
     private final Context context;
 
@@ -31,7 +31,7 @@ public class SqlDataBaseHelper extends SQLiteOpenHelper {
 
     @SuppressLint("SQLiteString")
     @Override
-    public void onCreate(SQLiteDatabase db) {
+    public void onCreate(SQLiteDatabase db) {//創建資料表
         String SqlTable1 = "CREATE TABLE IF NOT EXISTS caregiver (" +
                 "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "account TEXT not null," +
@@ -186,12 +186,12 @@ public class SqlDataBaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
-        // 删除旧表
+        // 删除舊表
         db.execSQL("DROP TABLE IF EXISTS " + DataBaseTable1);
         db.execSQL("DROP TABLE IF EXISTS " + DataBaseTable2);
         db.execSQL("DROP TABLE IF EXISTS " + DataBaseTable3);
         db.execSQL("DROP TABLE IF EXISTS " + DataBaseTable4);
-        // 创建新表
+        // 創建新表
         onCreate(db);
     }
 

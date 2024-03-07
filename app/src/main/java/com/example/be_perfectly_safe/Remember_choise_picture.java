@@ -41,13 +41,14 @@ public class Remember_choise_picture extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_remember_choise_picture);
 
+        //綁定元件
         choise = findViewById(R.id.button);
         listView = findViewById(R.id.listview);
 
         SqlGetData();
         setListView();
 
-        choise.setOnClickListener(new View.OnClickListener() {
+        choise.setOnClickListener(new View.OnClickListener() {//監聽事件(跳轉至RememberUploadImage)
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Remember_choise_picture.this, RememberUploadImage.class);
@@ -64,17 +65,17 @@ public class Remember_choise_picture extends AppCompatActivity {
         SqlDataBaseHelper dbHelper = new SqlDataBaseHelper(getApplicationContext());
         db = dbHelper.getReadableDatabase(); // 開啟資料庫
 
-        // 构建查询语句
+        // 建構查询语句
         String[] projection = {
                 "list_name",
                 "photo1"
         };
 
-        String selection = ""; // 可以使用适当的条件
-        String[] selectionArgs = new String[0]; // 如果有条件，提供相应的参数
-        String sortOrder = ""; // 可以指定排序顺序
+        String selection = "";
+        String[] selectionArgs = new String[0]; 
+        String sortOrder = ""; 
 
-        // 执行查询
+        //建構查詢語句
         Cursor c = db.query(
                 "family",
                 projection,
@@ -85,12 +86,12 @@ public class Remember_choise_picture extends AppCompatActivity {
                 sortOrder
         );
 
-        int count = c.getCount();
+        int count = c.getCount();//取得資料數量
         nameArray = new String[count];
         bitmap = new Bitmap[count];
 
         int i = 0;
-        while (c.moveToNext()) {
+        while (c.moveToNext()) {//取得資料
             int columnIndex = c.getColumnIndex("photo1");
             byte[] byteArray = c.getBlob(columnIndex);
             nameArray[i] = c.getString(0);
@@ -106,36 +107,42 @@ public class Remember_choise_picture extends AppCompatActivity {
     }
 
     public void setListView() {
-        Adapter adapter = new Adapter(this, nameArray, bitmap);
-        listView.setAdapter(adapter);
+    // 創建一個自定義的 Adapter 對象，並將它設置到 ListView 上
+    Adapter adapter = new Adapter(this, nameArray, bitmap);
+    listView.setAdapter(adapter); // listView 是一個 ListView 的實例，設置適配器，將資料和顯示方式綁定到 ListView 上
+}
+
+public class Adapter extends BaseAdapter {
+    private Context context; // 上下文對象，用於訪問應用程式資源和類別
+    private String[] nameArray; // 名字數組
+    private Bitmap[] bitmap; // 位圖數組，用於顯示圖片
+
+
+    public Adapter(Context context, String[] nameArray, Bitmap[] bitmap) {
+        // Adapter 的建構子，用於初始化 Adapter 中的成員變量
+        this.context = context;
+        this.nameArray = nameArray;
+        this.bitmap = bitmap;
     }
 
-    public class Adapter extends BaseAdapter {
-        private Context context;
-        private String[] nameArray;
-        private Bitmap[] bitmap;
+    @Override
+    public int getCount() {
+        // 返回數據集的項目數量
+        return nameArray.length;
+    }
 
+    @Override
+    public Object getItem(int position) {
+        // 返回指定位置的數據項目
+        return nameArray[position];
+    }
 
-        public Adapter(Context context, String[] nameArray, Bitmap[] bitmap) {
-            this.context = context;
-            this.nameArray = nameArray;
-            this.bitmap = bitmap;
-        }
-
-        @Override
-        public int getCount() {
-            return nameArray.length;
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return nameArray[position];
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
+    @Override
+    public long getItemId(int position) {
+        // 返回指定位置的項目 ID，通常設置為該位置
+        return position;
+    }
+}
 
         @SuppressLint("UseCompatLoadingForDrawables")
         @Override

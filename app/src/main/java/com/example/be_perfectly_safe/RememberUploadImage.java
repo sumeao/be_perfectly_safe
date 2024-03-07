@@ -42,8 +42,8 @@ public class RememberUploadImage extends AppCompatActivity {
     private SqlDataBaseHelper dbHelper;
     ImageButton button[] = new ImageButton[16];
     final String[] btArray = {"photo1", "photo2", "photo3", "photo4", "photo5", "photo6", "photo7", "photo8", "photo9", "photo10", "photo11", "photo12", "photo13", "photo14", "photo15", "photo16"};
-    final String[] btNum = {"1", "2", "3", "4", "5", "6", "7", "8", "1", "2", "3", "4", "5", "6", "7", "8"};
-    final String[] Dir = {"l", "l", "l", "l", "l", "l", "l", "l", "r", "r", "r", "r", "r", "r", "r", "r"};
+    final String[] btNum = {"1", "2", "3", "4", "5", "6", "7", "8", "1", "2", "3", "4", "5", "6", "7", "8"};//設定編號
+    final String[] Dir = {"l", "l", "l", "l", "l", "l", "l", "l", "r", "r", "r", "r", "r", "r", "r", "r"};//設定圖片的左右邊
     private int currentButtonIndex;
 
     @Override
@@ -54,6 +54,7 @@ public class RememberUploadImage extends AppCompatActivity {
 
         Button confirm;
 
+        //綁定元件
         button[0] = findViewById(R.id.one_1);
         button[8] = findViewById(R.id.one_2);
         button[1] = findViewById(R.id.two_1);
@@ -74,6 +75,7 @@ public class RememberUploadImage extends AppCompatActivity {
 
         confirm = findViewById(R.id.confirm);
 
+        //設定監聽事件(開啟相簿) 
         for (int i = 0; i < 16; i++) {
             final int currentButtonIndex = i;
             button[i].setOnClickListener(new View.OnClickListener() {
@@ -86,56 +88,53 @@ public class RememberUploadImage extends AppCompatActivity {
 
         }
 
-        confirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+      confirm.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        // 當按鈕被點擊時執行的操作
+        if (imageByteArray[0] != null && imageByteArray[8] != null) {
+            isempty = false; // 如果第一張和最後一張圖片都不為空，則設置 isempty 為 false
+        } else {
+            isempty = true; // 否則設置 isempty 為 true
+        }
 
-                if (imageByteArray[0] != null && imageByteArray[8] != null) {
-                    isempty = false;
+        // 如果 isempty 為 true，顯示警告對話框
+        if (isempty) {
+            new AlertDialog.Builder(RememberUploadImage.this)
+                    .setTitle("至少新增兩張圖片喔!!!")
+                    .setPositiveButton("確定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    })
+                    .show();
+        } else {
+            // 如果 isempty 為 false，顯示輸入名稱對話框
+            dbHelper = new SqlDataBaseHelper(getApplicationContext());
+            db = dbHelper.getWritableDatabase();
 
-                } else {
-                    isempty = true;
+            new AlertDialog.Builder(RememberUploadImage.this)
+                    .setTitle("為這一個模式取一個名字吧 ! !")
+                    .setView(R.layout.dialog_input) // 載入自定義的佈局檔案，用來顯示輸入框
+                    .setPositiveButton("確定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            EditText editText = ((AlertDialog) dialog).findViewById(R.id.editText);
+                            String userInput = editText.getText().toString();
 
-                }
-
-                if (isempty) {
-                    new AlertDialog.Builder(RememberUploadImage.this)
-                            .setTitle("至少新增兩張圖片喔!!!")
-                            .setPositiveButton("確定", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                }
-                            })
-                            .show();
-                } else {
-
-                    dbHelper = new SqlDataBaseHelper(getApplicationContext());
-                    db = dbHelper.getWritableDatabase();
-
-
-                    new AlertDialog.Builder(RememberUploadImage.this)
-                            .setTitle("為這一個模式取一個名字吧 ! !")
-                            .setView(R.layout.dialog_input) // 載入自定義的佈局檔案，用來顯示輸入框
-                            .setPositiveButton("確定", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    EditText editText = ((AlertDialog) dialog).findViewById(R.id.editText);
-                                    String userInput = editText.getText().toString();
-
-                                    if (!userInput.isEmpty()) { // 檢查輸入的字串是否為空
-                                        photoname = userInput;
-                                        saveByteArrayToDatabase(imageByteArray);
-                                    } else {
-                                        // 使用者未輸入字串，顯示提示訊息
-                                        Toast.makeText(RememberUploadImage.this, "請輸入名稱", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            })
-                            .show();
-                }
-            }
-
-        });
+                            if (!userInput.isEmpty()) { // 如果使用者輸入不為空
+                                photoname = userInput;
+                                saveByteArrayToDatabase(imageByteArray);
+                            } else {
+                                // 使用者未輸入字串，顯示提示訊息
+                                Toast.makeText(RememberUploadImage.this, "請輸入名稱", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    })
+                    .show();
+        }
+    }
+});
     }
 
     public void openGallery(int buttonIndex) {

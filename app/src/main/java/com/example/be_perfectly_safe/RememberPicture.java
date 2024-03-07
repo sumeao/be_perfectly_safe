@@ -2,7 +2,6 @@ package com.example.be_perfectly_safe;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,7 +11,6 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 
 public class RememberPicture extends AppCompatActivity {
@@ -25,6 +23,7 @@ public class RememberPicture extends AppCompatActivity {
     TextView myscore;
     Button giveup;
 
+    //判斷牌是否已被翻開，若牌已在check的陣列哩，代表已被翻開
     public boolean checkbt(int c) {
         boolean s = true;
         for (int i = 0; i < check.size(); i++) {
@@ -41,6 +40,8 @@ public class RememberPicture extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_remember_picture);
+
+        //設定圖片
         int imgID[] = {
                 R.drawable._1,
                 R.drawable._2,
@@ -51,7 +52,11 @@ public class RememberPicture extends AppCompatActivity {
                 R.drawable._7,
                 R.drawable._8,
         };
+
+        //設定判斷標準
         int[] pos = {0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7};
+
+        //洗牌
         for (int k = 0; k < 100; k++) {
             for (int i = 0; i < 16; i++) {
                 int tmp;
@@ -61,6 +66,8 @@ public class RememberPicture extends AppCompatActivity {
                 pos[j] = tmp;
             }
         }
+
+        //綁定元件
         ImageButton button[] = new ImageButton[16];
         button[0] = findViewById(R.id.bt0);
         button[1] = findViewById(R.id.bt1);
@@ -82,14 +89,15 @@ public class RememberPicture extends AppCompatActivity {
         giveup = findViewById(R.id.giveup);
         myscore = findViewById(R.id.myscore);
 
+        //設定監聽事件
         giveup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new AlertDialog.Builder(RememberPicture.this)
+                new AlertDialog.Builder(RememberPicture.this)//顯示提示框
                         .setTitle("確定要放棄嗎?")
                         .setPositiveButton("確定", new DialogInterface.OnClickListener() {
                             @Override
-                            public void onClick(DialogInterface dialog, int which) {
+                            public void onClick(DialogInterface dialog, int which) {//若點擊正確，跳轉至MainActivity
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
@@ -107,28 +115,29 @@ public class RememberPicture extends AppCompatActivity {
         for (int i = 0; i < 16; i++) {
             int bt = i;
 
-            button[i].setOnClickListener(new View.OnClickListener() {
+            button[i].setOnClickListener(new View.OnClickListener() {//設定16張圖的監聽事件
 
                 @SuppressLint({"UseCompatLoadingForDrawables", "NewApi"})
                 @Override
                 public void onClick(View v) {
 
-                    if (checkbt(bt)) {
-                        if (currentPos < 0) {
-                            currentPos = pos[bt];
-                            curView = button[bt];
+                    if (checkbt(bt)) {//判斷圖片是否已被翻開
+                        if (currentPos < 0) {//判斷是否為目前翻開的第一張
+                            currentPos = pos[bt];//紀錄目前翻開的編號
+                            curView = button[bt];//紀錄目前翻開的按鈕
                             check.add(bt);
                             bt1 = bt;
-                            button[bt].setImageDrawable(getDrawable(imgID[pos[bt]]));
+                            button[bt].setImageDrawable(getDrawable(imgID[pos[bt]]));//設定圖片
                         } else {
-                            if (curView == button[bt]) {
+                            if (curView == button[bt]) {//如果翻開同一個按鈕，將圖片翻回問號的樣子
                                 button[bt].setImageDrawable(getDrawable(R.drawable.question));
-                                check.remove((Object) "bt");
+                                check.remove((Object) "bt");//移除arraylist資料
                                 currentPos = -1;
-                            } else if (currentPos != pos[bt]) {
-                                button[bt].setImageDrawable(getDrawable(imgID[pos[bt]]));
+                            } else if (currentPos != pos[bt]) {//如果翻開不同按鈕，但編號不同
+                                
+                                button[bt].setImageDrawable(getDrawable(imgID[pos[bt]]));//設定圖片
 
-                                new Thread(new Runnable() {
+                                new Thread(new Runnable() {//延遲0.5秒
                                     @Override
                                     public void run() {
                                         try {
@@ -140,28 +149,28 @@ public class RememberPicture extends AppCompatActivity {
                                             @Override
                                             public void run() {
                                                 curView.setImageDrawable(getDrawable(R.drawable.question));
-                                                button[bt].setImageDrawable(getDrawable(R.drawable.question));
+                                                button[bt].setImageDrawable(getDrawable(R.drawable.question));//將兩張圖片翻回來
                                                 Toast.makeText(
-                                                        getApplicationContext(), "Not match", Toast.LENGTH_SHORT).show();
+                                                        getApplicationContext(), "Not match", Toast.LENGTH_SHORT).show();//顯示not mach的提示
                                             }
                                         });
                                     }
                                 }).start();
                                 check.remove((Object) bt1);
                             } else {
-                                button[bt].setImageDrawable(getDrawable(imgID[pos[bt]]));
-                                countPair++;
+                                button[bt].setImageDrawable(getDrawable(imgID[pos[bt]]));//設定圖片
+                                countPair++;//已配對數+1
                                 check.add(bt);
-                                runOnUiThread(new Runnable() {
+                                runOnUiThread(new Runnable() {//執行加分
                                     @Override
                                     public void run() {
                                         myscore.setText("目前分數 : "+countPair*10);
                                     }
                                 });
                                 int sum = pos.length / 2;
-                                if (countPair == sum) {
-                                    Toast.makeText(getApplicationContext(), "You win", Toast.LENGTH_SHORT).show();
-                                    new Thread(new Runnable() {
+                                if (countPair == sum) {//如果全部配對完成
+                                    Toast.makeText(getApplicationContext(), "You win", Toast.LENGTH_SHORT).show();//顯示 you win的提示
+                                    new Thread(new Runnable() {//延遲2秒
                                         @Override
                                         public void run() {
                                             try {
@@ -172,7 +181,7 @@ public class RememberPicture extends AppCompatActivity {
                                             runOnUiThread(new Runnable() {
                                                 @Override
                                                 public void run() {
-                                                    Intent intent = new Intent(RememberPicture.this, RememberChoice.class);
+                                                    Intent intent = new Intent(RememberPicture.this, RememberChoice.class);//執行跳轉
                                                     startActivity(intent);
                                                 }
                                             });

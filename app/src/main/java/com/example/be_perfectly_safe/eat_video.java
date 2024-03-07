@@ -19,6 +19,7 @@ public class eat_video extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_eat_video);
 
+        //設定步驟文字
         String Ingredients ;
         Ingredients =
                 "1. 台灣鯛去腥完成，洗淨切2cm片狀，加米酒1大匙、鹽1/3小匙醃漬。"+"\n"+
@@ -31,9 +32,11 @@ public class eat_video extends AppCompatActivity {
                         "8. 白菜軟化，鯛魚肉加入煮熟。"+"\n"
         ;
 
+        //綁定元件
         webView = findViewById(R.id.webview);
         ingredients = findViewById(R.id.ingredients);
 
+        //設定文字
         ingredients.setText(Ingredients);
 
         WebSettings webSettings = webView.getSettings();

@@ -8,37 +8,39 @@
     android:background="@drawable/gradient"
     tools:context=".InitialPage">
 
+<!--    創建一個寬290dp，高206dp的圖片，距離介面頂部100dp，不可視狀態，對齊介面頂部，左右邊-->
     <ImageView
         android:id="@+id/imageView38"
         android:layout_width="290dp"
         android:layout_height="206dp"
         android:layout_marginTop="100dp"
-        android:layout_marginEnd="60dp"
         android:src="@drawable/big_logo"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!--    創建一個寬321dp，高77dp的按鈕，背景顏色#EA7500，不可視狀態，字體大小25dp，字體顏色白色，對齊介面左右邊，頂部對齊imageView38的底部，底部對齊register的頂部-->
     <Button
         android:id="@+id/login"
         android:layout_width="321dp"
         android:layout_height="77dp"
-        android:layout_marginEnd="44dp"
-        android:visibility="invisible"
-        android:text="登錄"
-        android:textSize="25dp"
-        android:textColor="@color/white"
         android:backgroundTint="#EA7500"
+        android:text="登錄"
+        android:textColor="@color/white"
+        android:textSize="25dp"
+        android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/register"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView38"
-        app:layout_constraintVertical_bias="0.744" />
+         />
 
+    <!--    創建一個寬321dp，高77dp的按鈕，背景顏色#EA7500，不可視狀態，字體大小25dp，字體顏色白色，對齊介面左右邊及底部，頂部對齊login的底部-->
     <Button
         android:id="@+id/register"
         android:layout_width="321dp"
         android:layout_height="77dp"
-        android:layout_marginEnd="44dp"
         android:backgroundTint="#EA7500"
         android:text="註冊"
         android:textColor="@color/white"
@@ -46,6 +48,7 @@
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView38"
-        app:layout_constraintVertical_bias="0.735" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login"
+         />
 </androidx.constraintlayout.widget.ConstraintLayout>

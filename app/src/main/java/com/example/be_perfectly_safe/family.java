@@ -67,6 +67,7 @@ public class family extends AppCompatActivity {
     Integer[][] block = new Integer[4][4];
 
 
+    //檢查按鈕是否已被翻開
     public boolean checkbt(int c) {
         boolean s = true;
         for (int i = 0; i < check.size(); i++) {
@@ -84,9 +85,10 @@ public class family extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_family);
 
-        int[] pos = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
-        int[] bg = {R.drawable.spades, R.drawable.spades, R.drawable.spades, R.drawable.spades, R.drawable.heart2, R.drawable.heart2, R.drawable.heart2, R.drawable.heart2, R.drawable.diamond, R.drawable.diamond, R.drawable.diamond, R.drawable.diamond, R.drawable.clubs, R.drawable.clubs, R.drawable.clubs, R.drawable.clubs};
+        int[] pos = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};//設定判斷編號
+        int[] bg = {R.drawable.spades, R.drawable.spades, R.drawable.spades, R.drawable.spades, R.drawable.heart2, R.drawable.heart2, R.drawable.heart2, R.drawable.heart2, R.drawable.diamond, R.drawable.diamond, R.drawable.diamond, R.drawable.diamond, R.drawable.clubs, R.drawable.clubs, R.drawable.clubs, R.drawable.clubs};//設定圖片形狀圖
 
+        //取得sharedprefence資料
         SharedPreferences getPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         accountArgs = getPrefs.getString("list_name", "123");
@@ -95,12 +97,13 @@ public class family extends AppCompatActivity {
 
         handler = new Handler(Looper.getMainLooper());
 
-
+        //設定配對顏色
         String color[] = {"#FFAAD5", "#FF8EFF", "#BE77FF", "#AAAAFF", "#84C1FF", "#1AFD9C", "#C2FF68", "#FFBB77", "#FFBB77", "#C2FF68", "#1AFD9C", "#84C1FF", "#AAAAFF", "#BE77FF", "#FF8EFF", "#FFAAD5"};
 
         setImage();
         checkImage();
 
+        //洗牌
         for (int k = 0; k < 100; k++) {
             for (int i = 0; i < 16; i++) {
                 int tmp;
@@ -120,6 +123,7 @@ public class family extends AppCompatActivity {
         }
 
 
+        //綁定元件
         button[0] = findViewById(R.id.bt0);
         button[1] = findViewById(R.id.bt1);
         button[2] = findViewById(R.id.bt2);
@@ -147,6 +151,7 @@ public class family extends AppCompatActivity {
         myscore = findViewById(R.id.myscore);
 
 
+        //設定監聽事件
         giveup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -170,24 +175,23 @@ public class family extends AppCompatActivity {
         for (int i = 0; i < 16; i++) {
             int bt = i;
 
-            button[i].setOnClickListener(new View.OnClickListener() {
+            button[i].setOnClickListener(new View.OnClickListener() {//設定16張圖的監聽事件
 
 
                 @SuppressLint("UseCompatLoadingForDrawables")
                 @Override
                 public void onClick(View v) {
-                    handler.removeCallbacksAndMessages(null);
+                    handler.removeCallbacksAndMessages(null);//將habdler計數器歸零
 
-                    if (checkbt(bt)) {
+                    if (checkbt(bt)) {//判斷按鈕是否已被翻開
                         if (currentPos < 0) {
                             currentPos = pos[bt];
                             curView = button[bt];
                             cvbt = bt;
                             bt1 = bt;
-//                            button[bt].setScaleType(ImageView.ScaleType.FIT_CENTER); // 設置縮放方式
-                            button[bt].setImageBitmap(photoArray[pos[bt]]);
-                            button[bt].setBackgroundColor(Color.parseColor("#D5D6D6"));
-                            title_iv.setImageBitmap(photoArray[pos[bt]]);
+                            button[bt].setImageBitmap(photoArray[pos[bt]]);//設定圖片
+                            button[bt].setBackgroundColor(Color.parseColor("#D5D6D6"));//設定背景顏色
+                            title_iv.setImageBitmap(photoArray[pos[bt]]);//設定提示圖片
 
                             for (int i = 0; i < 16; i++) {
                                 if (label[currentPos].equals(label[pos[i]]) && !(direction[currentPos].equals(direction[pos[i]]))) {
@@ -269,7 +273,7 @@ public class family extends AppCompatActivity {
 
 
                         } else {
-                            if (currentPos == pos[bt]) {
+                                if (currentPos == pos[bt]) {
                                 button[bt].setImageBitmap(photoArray[pos[bt]]);
                                 button[bt].setBackground(originalBackground);
                                 check.remove((Object) bt);

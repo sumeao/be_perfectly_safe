@@ -25,6 +25,7 @@ public class RememberAnimal extends AppCompatActivity {
     TextView myscore;
     Button giveup;
 
+    //判斷牌是否已被翻開，若牌已在check的陣列裡，代表已被翻開
     public boolean checkbt(int c) {
         boolean s = true;
         for (int i = 0; i < check.size(); i++) {
@@ -41,6 +42,7 @@ public class RememberAnimal extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_remember_animal);
 
+         //設定圖片
         int imgID[] = {
                 R.drawable.lion,
                 R.drawable.monkey,
@@ -60,8 +62,10 @@ public class RememberAnimal extends AppCompatActivity {
                 R.drawable.meat,
         };
 
+        //設定判斷標準
         int[] pos = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
 
+        //洗牌
         for (int k = 0; k < 100; k++) {
             for (int i = 0; i < 16; i++) {
                 int tmp,test;
@@ -76,6 +80,7 @@ public class RememberAnimal extends AppCompatActivity {
             }
         }
 
+        //綁定元件
         ImageButton button[] = new ImageButton[16];
         button[0] = findViewById(R.id.bt0);
         button[1] = findViewById(R.id.bt1);
@@ -97,6 +102,7 @@ public class RememberAnimal extends AppCompatActivity {
         giveup = findViewById(R.id.giveup);
         myscore = findViewById(R.id.myscore);
 
+        //設定監聽事件
         giveup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -122,30 +128,30 @@ public class RememberAnimal extends AppCompatActivity {
         for (int i = 0; i < 16; i++) {
             int bt = i;
 
-            button[i].setOnClickListener(new View.OnClickListener() {
+            button[i].setOnClickListener(new View.OnClickListener() {//設定16張圖的監聽事件
 
                 @SuppressLint({"UseCompatLoadingForDrawables", "NewApi"})
                 @Override
                 public void onClick(View v) {
 
-                    if (checkbt(bt)) {
-                        if (currentPos < 0) {
-                            currentPos = pos[bt];
-                            curView = button[bt];
+                    if (checkbt(bt)) {//判斷圖片是否已被翻開
+                        if (currentPos < 0) {//判斷是否為目前翻開的第一張
+                            currentPos = pos[bt];//紀錄目前翻開的編號
+                            curView = button[bt];//紀錄目前翻開的按鈕
                             check.add(bt);
                             bt1 = bt;
-                            button[bt].setImageDrawable(getDrawable(imgID[bt]));
+                            button[bt].setImageDrawable(getDrawable(imgID[bt]));//設定圖片
                         } else {
-                            if (currentPos == pos[bt]) {
+                            if (currentPos == pos[bt]) {//如果翻開同一個按鈕，將圖片翻回問號的樣子
                                 button[bt].setImageDrawable(getDrawable(R.drawable.question));
-                                check.remove((Object) "bt");
+                                check.remove((Object) "bt");//移除arraylist資料
                                 currentPos = -1;
-                            } else if (currentPos + pos[bt]!=15 && currentPos != pos[bt]) {
-                                button[bt].setImageDrawable(getDrawable(imgID[bt]));
+                            } else if (currentPos + pos[bt]!=15 && currentPos != pos[bt]) {//如果翻開不同按鈕，但編號相加不為15
+                                button[bt].setImageDrawable(getDrawable(imgID[bt]));//設定圖片
 
                                 new Thread(new Runnable() {
                                     @Override
-                                    public void run() {
+                                    public void run() {//延遲0.5秒
                                         try {
                                             Thread.sleep(500);
                                         } catch (InterruptedException e) {
@@ -155,28 +161,28 @@ public class RememberAnimal extends AppCompatActivity {
                                             @Override
                                             public void run() {
                                                 curView.setImageDrawable(getDrawable(R.drawable.question));
-                                                button[bt].setImageDrawable(getDrawable(R.drawable.question));
+                                                button[bt].setImageDrawable(getDrawable(R.drawable.question));//將兩張圖片翻回來
                                                 Toast.makeText(
-                                                        getApplicationContext(), "Not match", Toast.LENGTH_SHORT).show();
+                                                        getApplicationContext(), "Not match", Toast.LENGTH_SHORT).show();//顯示not mach的提示
                                             }
                                         });
                                     }
                                 }).start();
                                 check.remove((Object) bt1);
                             } else {
-                                button[bt].setImageDrawable(getDrawable(imgID[bt]));
-                                countPair++;
+                                button[bt].setImageDrawable(getDrawable(imgID[bt]));//設定圖片
+                                countPair++;//已配對數+1
                                 check.add(bt);
-                                runOnUiThread(new Runnable() {
+                                runOnUiThread(new Runnable() {//執行加分
                                     @Override
                                     public void run() {
                                         myscore.setText("目前分數 : " + countPair * 10);
                                     }
                                 });
                                 int sum = pos.length / 2;
-                                if (countPair == sum) {
-                                    Toast.makeText(getApplicationContext(), "You win", Toast.LENGTH_SHORT).show();
-                                    new Thread(new Runnable() {
+                                if (countPair == sum) {//如果全部配對完成
+                                     Toast.makeText(getApplicationContext(), "You win", Toast.LENGTH_SHORT).show();//顯示 you win的提示
+                                    new Thread(new Runnable() {//延遲2秒
                                         @Override
                                         public void run() {
                                             try {
@@ -187,7 +193,7 @@ public class RememberAnimal extends AppCompatActivity {
                                             runOnUiThread(new Runnable() {
                                                 @Override
                                                 public void run() {
-                                                    Intent intent = new Intent(RememberAnimal.this, RememberChoice.class);
+                                                    Intent intent = new Intent(RememberPicture.this, RememberChoice.class);//執行跳轉
                                                     startActivity(intent);
                                                 }
                                             });

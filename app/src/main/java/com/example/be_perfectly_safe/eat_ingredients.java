@@ -27,11 +27,13 @@ public class eat_ingredients extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_eat_ingredients);
 
+        //綁定元件
         ingredients = findViewById(R.id.ingredients);
         imgbt = findViewById(R.id.BtVideo);
         ExName = findViewById(R.id.ExName);
         photo = findViewById(R.id.photo);
 
+        //將圖片放到RecipePicture的arraylist裡
         RecipePicture.add(R.drawable.menu01);
         RecipePicture.add(R.drawable.menu02);
         RecipePicture.add(R.drawable.menu03);
@@ -47,6 +49,7 @@ public class eat_ingredients extends AppCompatActivity {
         RecipePicture.add(R.drawable.menu13);
         RecipePicture.add(R.drawable.menu14);
 
+        //設定菜單文字
         String Ingredients;
         Ingredients =
                 "1. 大白菜1/2顆對切洗淨瀝乾，切大塊" + "\n" +
@@ -57,17 +60,22 @@ public class eat_ingredients extends AppCompatActivity {
                         "6. 油3大匙、米酒1大匙" + "\n"
         ;
 
+        //取得sharedprefence的資料
         SharedPreferences getPrefs = PreferenceManager
                 .getDefaultSharedPreferences(this);
 
-        String name = getPrefs.getString("name", "null");
+        //取得名為name的資料，若沒有資料則為null
+        String name = getPrefs.getString("name", "null");     
+        
+        //取得名為RecipePicture的資料，若沒有資料則為null
         String img = getPrefs.getString("RecipePicture", "null");
 
+        //設定圖片及文字
         ExName.setText(name);
         photo.setImageResource(RecipePicture.get(Integer.parseInt(img)));
-
         ingredients.setText(Ingredients);
 
+        //設定監聽事件(跳轉至eat_video)
         imgbt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
